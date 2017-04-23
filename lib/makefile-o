@@ -1,0 +1,88 @@
+##############################################################################
+################################# makefile ###################################
+##############################################################################
+#                                                                            #
+#   makefile of libCQK - do not build libCQK.a, just $(libCQKOBJ)            #
+#   all modules are given in input                                           #
+#                                                                            #
+#   Input:  $(CC)        = compiler command                                  #
+#           $(SW)        = compiler options                                  #
+#           $(libCPXINC) = the -I$(include directories)	for libCPX           #
+#           $(libCQKDIR) = the basic directory for the library               #
+#                                                                            #
+#   Output: $(libCQKOBJ) = the library                                       #
+#           $(libCQKLIB) = external libreries + -L<libdirs>                  #
+#           $(libCQKH)   = all the .h files of the CQK library               #
+#           $(libCQKINC) = all the -I$(include dirs) of the CQK library	     #
+#                                                                            #
+#                                VERSION 1.00	                             #
+#                                17 - 05 - 2012                              #
+#                                                                            #
+#                              Antonio Frangioni                             #
+#                            Operations Research Group                       #
+#                           Dipartimento di Informatica	                     #
+#                            Universita' di Pisa                             #
+#                                                                            #
+##############################################################################
+
+# define & include the necessary modules- - - - - - - - - - - - - - - - - - -
+# if a module is not used in the current configuration, just comment out the
+# corresponding include line
+# each module outputs some macros to be used here:
+# *OBJ is the final object/library
+# *LIB external libreries + -L<libdirs>
+# *H   is the list of all include files
+# *INC is the -I<include directories>
+
+# CQKnPClass
+CQKDIR = $(libCQKDIR)CQKnPClass/
+include $(CQKDIR)makefile
+
+# CQKnPCplex
+#CPKDIR = $(libCQKDIR)CQKnPCplex/
+#include $(CPKDIR)makefile
+
+# DualCQKnP
+DQKDIR = $(libCQKDIR)DualCQKnP/
+include $(DQKDIR)makefile
+
+# ExDualCQKnP
+EQKDIR = $(libCQKDIR)ExDualCQKnP/
+include $(EQKDIR)makefile
+
+# CQKnPClone
+CQKCDIR = $(libCQKDIR)CQKnPClone/
+include $(CQKCDIR)makefile
+
+# main module (archiving phase) - - - - - - - - - - - - - - - - - - - - - - -
+
+# object files- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+libCQKOBJ =	$(CPKOBJ)\
+		$(DQKOBJ)\
+		$(EQKOBJ)
+		
+# libreries - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+libCQKLIB =	$(CPKLIB)\
+		$(DQKLIB)\
+		$(EQKLIB)
+		
+# includes- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+libCQKH =	$(CQKH)\
+		$(CQKCH)\
+		$(CPKH)\
+		$(DQKH)\
+		$(EQKH)
+		
+# include dirs- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+libCQKINC =	$(CQKINC)\
+		$(CQKCINC)\
+		$(CPKINC)\
+		$(DQKINC)\
+		$(EQKINC)
+
+# clean - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+clean::
+	rm -f $(libCQKOBJ)
+
+############################ End of makefile #################################

@@ -1,0 +1,145 @@
+/*--------------------------------------------------------------------------*/
+/*---------------------------- File MainPage -------------------------------*/
+/*--------------------------------------------------------------------------*/
+/** \mainpage <H1>The CQKnPClass Project Documentation</H1>
+
+\section intro Introduction
+
+This file is a short user manual for the \c CQKnPClass project, a small
+collection of solvers for Continuous (Convex) Quadratic Knapsack Problems
+(CQKnP).
+
+\subsection disclaimer Standard Disclaimer
+
+This code is provided "as is", without any explicit or implicit warranty
+that it will properly behave or it will suit you needs. Although codes
+reaching the distribution phase have usually been extensively tested, we
+cannot guarantee that they are absolutely bug-free (who can?). Any use of
+the codes is at you own risk: in no case we could be considered liable for
+any damage or loss you would eventually suffer, either directly or indirectly,
+for having used this code. More details about the non-warranty attached to
+this code are available in the license description file.
+
+The code also comes with a "good will only" support: feel free to contact us
+for any comments/critics/bug report/request help you may have, we will be
+happy to try to answer and help you. But we cannot spend much time solving
+your problems, just the time to read a couple of e-mails and send you fast
+suggestions if the problem is easily solvable. Apart from that, we can't offer
+you any support.
+
+\subsection license License
+
+This code is provided free of charge under the "GNU Lesser General Public
+License", see the file doc/LGPL.txt.
+
+\subsection release Release
+
+Current version is: 1.05
+
+Current date is: December 22, 2012
+
+\section howto Package description
+
+This release comes out with the following files:
+
+-  \b CQKnPClass.h: Contains the declaration of class \c CQKnPClass. It is an
+   <em>abstract class</em> with <em>pure virtual methods</em>, so that you
+   cannot declare objects of type \c CQKnPClass, but only of derived classes of
+   its. \c CQKnPClass offers a general interface for CQKnP solver codes, with
+   methods for setting and reading the data of the problems, for solving it
+   and retrieving solution informations, and so on. The actual CQKnP solvers
+   distributed in this package conforms with the interface, i.e., they derive
+   from \c CQKnPClass; however, the idea is that applications using this
+   interface would require almost no changes if any other solvers
+   implementing the interface is used. Carefully read the public interface of
+   the class to understand how to use the public methods of the class.
+
+-  \b CQKnPClone/CQKnPClone.h: Contains the declarations of class \c CQKnPClone,
+   implementing a "fake" CQKnP solver that takes two "real" ones and does
+   everything on both; useful for testing the solvers (either for correctness or
+   for efficiency) when used within "complex" approaches
+
+-  \b CQKnPClone/makefile: "recursive" makefile for the \c CQKnPClone class, see
+   lib and extlib below
+
+-  \b CQKnPCplex/CQKnPCplex.h: Contains the declarations of class \c CQKnPCplex,
+   implementing a CQKnP solver conforming to the \c CQKnPClass interface
+   based on calls to the commercial (but now free for academic purposes)
+   \c Cplex solver from IBM. You need to separately obtain a \c Cplex
+   distribution and link it with this code (see QKnPCplex/makefile below) to
+   make it work. This does not make much of a sense in that \c Cplex is far
+   slower than the other options, unless one is interested in checking
+   correctness and efficiency of some CQKnP solver.
+
+-  \b CQKnPCplex/CQKnPCplex.C: Contains the implementation of the \c CQKnPCplex
+   class. You should not need to read it.
+
+-  \b CQKnPCplex/makefile: "recursive" makefile for the \c CQKnPCplex class, see
+   lib and extlib below
+
+-  \b doc/LGPL.txt: Description of the LGPL license.
+
+-  \b doc/refman.pdf: Pdf version of the manual.
+
+-  \b doc/html/*: Html version of the  manual.
+
+-  \b DualCQKnP/DualCQKnP.h: Contains the declarations of class \c DualCQKnP,
+   implementing a CQKnP solver based on the standard dual-ascent approach.
+   This class derives from \c CQKnPClass, hence most of its interface is
+   defined and discussed in CQKnPClass.h; however, for efficiency it is
+   actually restricted to instances where \e all items have <em>strictly
+   positive quadratic costs</em> and <em>finite bounds</em> (both lower and
+   upper), so in fact it does not fully implement the interface. Furthermore,
+   a few implementation-dependent details (and compile-time switches) which
+   are worth knowing are described in this file.
+
+-  \b DualCQKnP/DualCQKnP.C: Contains the implementation of the \c DualCQKnP
+   class. You should not need to read it.
+
+-  \b DualCQKnP/makefile: Makefile for the \c DualCQKnP class.
+
+-  \b ExDualCQKnP/ExDualCQKnP.h: Contains the declarations of class
+   \c ExDualCQKnP, derived from \c DualCQKnP (and hence from \c CQKnPClass)
+   and extending it to support all the features of the problem (possibly
+   zero quadratic costs, possibly infinite upper and lower bounds). It is
+   slightly less efficient, so \c DualCQKnP should be preferred for the
+   instances that it can solve.
+
+-  \b ExDualCQKnP/ExDualCQKnP.C: Contains the implementation of the
+   \c ExDualCQKnP class. You should not need to read it.
+
+-  \b ExDualCQKnP/makefile: Makefile for the \c ExDualCQKnP class.
+
+-  \b extlib/makefile-libCPX: the makefile where Cplex path libraries are
+   declared, edit it to insert your own
+
+-  \b lib/*: Makefiles for creating the libCQK.a library file to be linked
+   by the code using it (in this case the main files in the Main directory);
+   in particular, makefile-o is where the modules that will be part of the
+   library are decided (\c CQKnPCplex comes commented out by default)
+
+-  \b Main/Main.C: Contains an example of use of the provided CQKnP solvers:
+   creates pne of them (according to the some macros) and use it to solve a
+   chosen instance read from file.
+
+-  \b Main/MainRnd.C: Contains an example of use of the provided CQKnP solvers:
+   creates two of them (according to the some macros) and use them to solve a
+   slew of randomly-generated instances, checking that the results agree (and
+   comparing the running times).
+
+-  \b Main/makefile: A makefile for Main.C and MainRnd.C. You can easily decide
+   which Main file to use, while in order to decide which solvers will be in
+   the library you have to work with lib/makefile-o; of course you have to be
+   careful to include these required according to the macro settings in
+   Main[Rnd].C (assuming you care anything about these main files, which is
+   unclear why you should).
+
+- \b Main\tests\rnd.sh: Script file for using MainRnd.C.
+
+- \b Main\tests\spp.sh: Script file for using Main.C together with the
+  generator of one-dimensional Sensor Placement Problems that can be found at
+  \l http://www.di.unipi.it/optimize/Data/RDR.html
+*/
+/*--------------------------------------------------------------------------*/
+/*------------------------- End File MainPage ------------------------------*/
+/*--------------------------------------------------------------------------*/

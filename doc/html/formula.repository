@@ -1,0 +1,5 @@
+\form#0:$\in R_+$
+\form#1:$\in R \cup$
+\form#2:\[ \min \sum_{i \in E} C[ i ] * X[ i ] + D[ i ] * X[ i ]^2 \]
+\form#3:\[ \sum_{i \in E} X[ i ] \leq V ( = V ) \]
+\form#4:\[ A[ i ] \leq X[ i ] \leq B[ i ] \hspace{1cm} i \in E \]
