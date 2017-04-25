@@ -23,7 +23,9 @@ the abstract base class CQKnPClass and a few derived classes:
    upper and lower bounds), at the cost of being slightly less efficient, so
    DualCQKnP should be preferred for the instances that it can solve.
 
-See doc/ for the Doxygen documentation of the code.
+Doxygen documentation is in docs/ and available at
+
+  https://frangio68.github.io/Convex-Quadratic-Knapsack/
 
 To install the file, go into Main and type "make". If you want to use the
 CQKnPCplex class, which comes commented out by default, uncomment it from
@@ -35,8 +37,4 @@ Two test Main files are provided into Main/, see the documentation for details.
 More information about the implemented algorithms can be found at
 
   http://pages.di.unipi.it/frangio/abstracts.html#EJOR13
-  
-
-
-
-
+ 
